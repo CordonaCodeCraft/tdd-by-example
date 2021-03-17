@@ -2,6 +2,9 @@ package guru.springframework;
 
 import java.util.Objects;
 
+/**
+ * Created by jt on 10/10/18.
+ */
 public class Pair {
 
     private final String from;
@@ -16,17 +19,13 @@ public class Pair {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Pair pair = (Pair) o;
-
-        if (!Objects.equals(from, pair.from)) return false;
-        return Objects.equals(to, pair.to);
+        return Objects.equals(from, pair.from) &&
+                Objects.equals(to, pair.to);
     }
 
     @Override
     public int hashCode() {
-        int result = from != null ? from.hashCode() : 0;
-        result = 31 * result + (to != null ? to.hashCode() : 0);
-        return result;
+        return Objects.hash(from, to);
     }
 }

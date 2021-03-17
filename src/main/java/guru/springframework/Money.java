@@ -1,7 +1,10 @@
 package guru.springframework;
 
-public class Money implements Expression {
 
+/**
+ * Created by jt on 2018-10-05.
+ */
+public class Money implements Expression {
     protected int amount;
     protected String currency;
 
@@ -14,21 +17,22 @@ public class Money implements Expression {
         return currency;
     }
 
-    public static Money dollar(int amount) {
+    public static Money dollar(int amount){
         return new Money(amount, "USD");
     }
 
-    public static Money franc(int amount) {
+    public static Money franc(int amount){
         return new Money(amount, "CHF");
     }
 
     public boolean equals(Object object) {
         Money money = (Money) object;
-        return amount == money.amount && this.currency.equals(money.currency);
+        return amount == money.amount
+                && this.currency == money.currency;
     }
 
     @Override
-    public Money reduce(Bank bank, String to) {
+    public Money reduce(Bank bank, String to){
         return new Money(amount / bank.rate(this.currency, to), to);
     }
 
@@ -40,13 +44,13 @@ public class Money implements Expression {
                 '}';
     }
 
+    @Override
     public Expression times(int multiplier) {
         return new Money(amount * multiplier, this.currency);
     }
 
-    public Expression plus(Expression addend) {
+    @Override
+    public Expression plus(Expression addend){
         return new Sum(this, addend);
     }
-
-
 }
